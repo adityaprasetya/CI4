@@ -21,7 +21,7 @@
                                         <p class="card-text">Stok : <?= $barang->stk ?></p>
                                         <p class="card-text">Satuan : <?= $barang->sat ?></p>
                                         <a href="/pages/edit/<?= $barang->slug ?>" class="btn btn-warning">Ubah</a>
-                                        <form action="/pages/<?= $barang->id ?>" method="post" class="d-inline">
+                                        <form action="/pages/<?= $barang->id_brg ?>" method="post" class="d-inline">
                                             <?= csrf_field(); ?>
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Hapus Data Ini ?')">Hapus</button>

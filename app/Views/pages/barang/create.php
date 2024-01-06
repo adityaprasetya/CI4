@@ -16,26 +16,31 @@
                     <?php endif; ?>
                     <div class="card">
                         <div class="card-body">
+                            <?= csrf_field(); ?>
                             <form action="/pages/save" method="post" enctype="multipart/form-data">
-                                <?= csrf_field(); ?>
                                 <div class="mb-3">
                                     <label for="nm_brg" class="form-label">Nama Barang</label>
-                                    <input type="text" class="form-control <?= ($validation->hasError('nm_brg')) ? 'is-invalid' : '' ?>" id="nm_brg" name="nm_brg">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('nm_brg') ?>
-                                    </div>
+                                    <input type="text" class="form-control" id="nm_brg" name="nm_brg" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="hrg" class="form-label">Harga</label>
-                                    <input type="text" class="form-control" id="hrg" name="hrg">
+                                    <label for="hrg" class="form-label">Harga (Rp)</label>
+                                    <input type="number" class="form-control" id="hrg" name="hrg" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="stk" class="form-label">Stok</label>
-                                    <input type="text" class="form-control" id="stk" name="stk">
+                                    <input type="number" class="form-control" id="stk" name="stk" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="sat" class="form-label">Satuan</label>
-                                    <input type="text" class="form-control" id="sat" name="sat">
+                                    <select name="sat" class="form-select" aria-label="Default select example">
+                                        <option>Open this select menu</option>
+                                        <option selected value="Pcs">Pcs</option>
+                                        <option value="ltr">ltr</option>
+                                        <option value="Kg">Kg</option>
+                                        <option value="gr">gr</option>
+                                        <option value="cm">cm</option>
+                                        <option value="m">m</option>
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-2">Tambah</button>
                                 <a href="/pages/barang" class="btn btn-cancel mt-2">Kembali</a>

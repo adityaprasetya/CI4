@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class PelangganModel extends Model
 {
     protected $table = 'pelanggan';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_plg';
 
     protected $returnType     = 'object';
     //protected $useSoftDeletes = true;
@@ -15,7 +15,7 @@ class PelangganModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $allowedFields = [
-        'id',
+        'id_plg',
         'nm_plg',
         'jn_klm',
         'tlp',
@@ -30,7 +30,7 @@ class PelangganModel extends Model
     public function getPelanggan($slug = false)
     {
         if ($slug == false) {
-            return $this->findAll();
+            return $this->table('pelanggan')->findAll();
         }
 
         return $this->where(['slug' => $slug])->first();
@@ -40,7 +40,6 @@ class PelangganModel extends Model
     {
         $builder = $this->table('pelanggan');
 
-        $builder->like('id', $cari);
         $builder->orlike('nm_plg', $cari);
         $builder->orlike('jn_klm', $cari);
         $builder->orlike('tlp', $cari);

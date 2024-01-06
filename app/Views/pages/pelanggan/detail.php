@@ -21,7 +21,7 @@
                                         <p class="card-text">Jenis Kelamin : <?= $pelanggan->jn_klm ?></p>
                                         <p class="card-text">Telepon : <?= $pelanggan->tlp ?></p>
                                         <a href="/pages/edit_pl/<?= $pelanggan->slug ?>" class="btn btn-warning">Ubah</a>
-                                        <form action="/pages/<?= $pelanggan->id ?>" method="post" class="d-inline">
+                                        <form action="/pages/pelanggan/<?= $pelanggan->id_plg ?>" method="post" class="d-inline">
                                             <?= csrf_field(); ?>
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Hapus Data Ini ?')">Hapus</button>

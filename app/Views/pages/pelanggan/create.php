@@ -20,22 +20,23 @@
                                 <?= csrf_field(); ?>
                                 <div class="mb-3">
                                     <label for="nm_plg" class="form-label">Nama Pelanggan</label>
-                                    <input type="text" class="form-control <?= ($validation->hasError('nm_brg')) ? 'is-invalid' : '' ?>" id="nm_plg" name="nm_plg">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('nm_plg') ?>
-                                    </div>
+                                    <input type="text" class="form-control" id="nm_plg" name="nm_plg" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="jn_klm" class="form-label">Jenis Kelamin</label>
-                                    <input type="text" class="form-control" id="jn_klm" name="jn_klm">
+                                    <select name="jn_klm" class="form-select" aria-label="Default select example">
+                                        <option>Open this select menu</option>
+                                        <option selected value="Pria">Pria</option>
+                                        <option value="Wanita">Wanita</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="tlp" class="form-label">Telepon</label>
-                                    <input type="text" class="form-control" id="tlp" name="tlp">
+                                    <input type="number" class="form-control" id="tlp" name="tlp" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="sat" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="almt" name="almt">
+                                    <input type="text" class="form-control" id="almt" name="almt" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-2">Tambah</button>
                                 <a href="/pages/pelanggan" class="btn btn-cancel mt-2">Kembali</a>

@@ -1,0 +1,53 @@
+template
+- mobile friendly
+
+dashboard
+- dashboard
+
+migration database
+seed database
+faker database
+
+rancang bangun web penjualan codeigniter
+========================================
+HMVC -> third party
+database -> rnd
+web design -> bootstrap admin
+report
+
+xampp
+remove semicolon
+environment php
+copy file ci4-test
+copy file JSONPANEL
+composer
+
+CodeIgniter 4
+
+public
+	- css
+	- js
+	- gambar
+	- htaccess
+	- index.php
+	- robot.txt
+
+app
+	- model
+	- view
+	- controller
+	- config
+		- app (base url, index)
+		- database
+		- routes
+
+test
+	- testing unit
+
+env	- production, testing, development
+
+vendor (composer) *notmodified
+	- thirdparty 
+
+writable *notmodified
+	- log dll

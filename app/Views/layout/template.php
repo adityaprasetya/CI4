@@ -25,6 +25,40 @@
     <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
     <script src="../assets/js/dashboard.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "<?= base_url('pages/kode_pj') ?>",
+                type: "GET",
+                success: function(hasil) {
+                    var obj = $.parseJSON(hasil);
+                    $('#nm_pjl').val(obj);
+                }
+            })
+        })
+    </script>
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.select2').on('change', function() {
+                $("#hrg").val($('.select2 option:selected').attr('hrg'));
+            });
+        });
+    </script>
+
+    <script>
+        function findTotal() {
+            var hrg = document.getElementById('hrg').value;
+            var qty = document.getElementById('qty').value;
+            var result = document.getElementById('result');
+            var myResult = hrg * qty;
+
+            document.getElementById('ttl').value = myResult;
+        }
+    </script>
+
 </body>
 
 </html>

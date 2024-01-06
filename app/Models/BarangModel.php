@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class BarangModel extends Model
 {
     protected $table = 'barang';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_brg';
 
     protected $returnType     = 'object';
     //protected $useSoftDeletes = true;
@@ -15,7 +15,7 @@ class BarangModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $allowedFields = [
-        'id',
+        'id_brg',
         'nm_brg',
         'hrg',
         'stk',
@@ -30,7 +30,7 @@ class BarangModel extends Model
     public function getBarang($slug = false)
     {
         if ($slug == false) {
-            return $this->findAll();
+            return $this->table('barang')->findAll();
         }
 
         return $this->where(['slug' => $slug])->first();

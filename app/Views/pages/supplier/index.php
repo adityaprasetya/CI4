@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title fw-semibold mb-4">Data Supplier</h5>
-                    <a href="/pages/create_pl" class="btn btn-primary mb-4">Tambah</a>
+                    <a href="/pages/create_sl" class="btn btn-primary mb-4">Tambah</a>
                     <?php if (session()->getFlashdata('pesan')) : ?>
                         <div class="alert alert-success" role="alert">
                             <?= session()->getFlashdata('pesan'); ?>
@@ -36,15 +36,14 @@
                             </thead>
                             <tbody>
                                 <?php $i = 1 + (5 * ($currentPage - 1)); ?>
-                                <?php foreach ($pelanggan as $p) : ?>
+                                <?php foreach ($supplier as $s) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
-                                        <td><?= $p->nm_plg ?></td>
-                                        <td><?= $p->jn_klm ?></td>
-                                        <td><?= $p->tlp ?></td>
-                                        <td><?= $p->almt ?></td>
+                                        <td><?= $s->nm_spl ?></td>
+                                        <td><?= $s->tl_spl ?></td>
+                                        <td><?= $s->al_spl ?></td>
                                         <td>
-                                            <a href="/pages/detail_pl/<?= $p->slug ?>" class="btn btn-primary">Detail</a>
+                                            <a href="/pages/detail_sl/<?= $s->slug ?>" class="btn btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -56,7 +55,7 @@
                                     <a href="">Halaman </a>
                                 </div>
                                 <div class="col">
-                                    <?= $pager->links('pelanggan', 'pelanggan_page'); ?>
+                                    <?= $pager->links('supplier', 'pagination'); ?>
                                 </div>
                             </div>
                         </div>

@@ -57,7 +57,7 @@
                                     <a href="">Halaman </a>
                                 </div>
                                 <div class="col">
-                                    <?= $pager->links('pelanggan', 'pelanggan_page'); ?>
+                                    <?= $pager->links('pelanggan', 'pagination'); ?>
                                 </div>
                             </div>
                         </div>

@@ -29,7 +29,7 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama Barang</th>
-                                    <th scope="col">Harga</th>
+                                    <th scope="col">Harga (Rp)</th>
                                     <th scope="col">Stok</th>
                                     <th scope="col">Satuan</th>
                                     <th scope="col">Aksi</th>
@@ -57,7 +57,7 @@
                                     <a href="">Halaman </a>
                                 </div>
                                 <div class="col">
-                                    <?= $pager->links('barang', 'barang_page'); ?>
+                                    <?= $pager->links('barang', 'pagination'); ?>
                                 </div>
                             </div>
                         </div>
