@@ -1,15 +1,67 @@
-template
-- mobile friendly
+- pengurangan stok
+- dashboard
+- rapihkan controller
+
+join
+- ubah data barang, penjualan
+
+	ubah penjualan harga tidak muncul otomatis
+
+	di barang jangan pakai perhitungan otomatis
+
+	penjualan: jumlah bayar, kembalian
+
+	fungsi auto isi sesuai combobox
+
+routes bersihkan
+
+rapihkan source code
+
+barang
+- foto barang
+
+penjualan
+- ubah
+- pembelian barang lebih dari 1
+- detail -> design form struk
+- tata letak form
+- pengurangan stok barang
+- penambahan metode bayar: tunai/transfer
 
 dashboard
-- dashboard
+- hubungkan ke database
+
+template
+- mobile friendly
 
 migration database
 seed database
 faker database
 
+login
+
+landing page
+
+mobile app: flutter
+
+=====================================
+
+method:
+- crud
+- api
+- myth login
+- ..
+
+teknik: ternary dll
+
+mvc, tiap module terpisah module hmvc
+
+notif error
+
+========================================
 rancang bangun web penjualan codeigniter
 ========================================
+
 HMVC -> third party
 database -> rnd
 web design -> bootstrap admin

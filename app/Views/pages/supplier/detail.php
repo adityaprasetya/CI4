@@ -20,7 +20,7 @@
                                         <p class="card-text">Nama Lengkap : <?= $supplier->nm_spl ?></p>
                                         <p class="card-text">Telepon : <?= $supplier->tl_spl ?></p>
                                         <p class="card-text">Alamat : <?= $supplier->al_spl ?></p>
-                                        <a href="/pages/edit_sl/<?= $supplier->slug ?>" class="btn btn-warning">Ubah</a>
+                                        <a href="/pages/edit_sl/<?= $supplier->slug_spl ?>" class="btn btn-warning">Ubah</a>
                                         <form action="/pages/supplier/<?= $supplier->id_spl ?>" method="post" class="d-inline">
                                             <?= csrf_field(); ?>
                                             <input type="hidden" name="_method" value="DELETE">

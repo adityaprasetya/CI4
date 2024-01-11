@@ -39,9 +39,14 @@ class Pages extends BaseController
     {
         $data = [
             'title' => 'Home | Penjualan',
+            'supplier' => $this->supplierModel->getSupplier(),
             'penjualan' => $this->penjualanModel->getPenjualan(),
             'pelanggan' => $this->pelangganModel->getPelanggan(),
-            'barang' => $this->barangModel->getBarang()
+            'barang' => $this->barangModel->getBarang(),
+
+            'jmlbrg' => $this->barangModel->getJmlBarang(),
+            'jmlspl' => $this->supplierModel->getJmlSupplier(),
+            'jmlplg' => $this->pelangganModel->getJmlPelanggan()
         ];
         echo view('pages/dashboard', $data);
     }
@@ -148,16 +153,23 @@ class Pages extends BaseController
     // ----------------------------------------------------------------------------------------------------
 
     // VIEW
-    public function detail($slug)
+    public function detail($slug_brg)
     {
         $data = [
             'title' => 'Detail Product | Penjualan',
-            'barang' => $this->barangModel->getBarang($slug)
+            'barang' => $this->barangModel->getBarang($slug_brg),
+            'supplier' => $this->supplierModel->getSupplier()
         ];
+
+        $barang = $this->barangModel->find($slug_brg);
+        if (is_object($barang)) {
+            $data['barang'] = $barang;
+            return view('barang/edit', $data);
+        }
 
         //jika tidak ada data
         if (empty($data['barang'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Barang ' . $slug . ' Tidak DItemukan');
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Barang ' . $slug_brg . ' Tidak DItemukan');
         }
 
         return view('pages/barang/detail', $data);
@@ -168,7 +180,9 @@ class Pages extends BaseController
     {
         $data = [
             'title' => 'Form Tambah Data',
-            'validation' => \Config\Services::validation()
+            'validation' => \Config\Services::validation(),
+            'barang' => $this->barangModel->getBarang(),
+            'supplier' => $this->supplierModel->getSupplier()
         ];
 
         return view('pages/barang/create', $data);
@@ -202,14 +216,15 @@ class Pages extends BaseController
         }
 
         $barang = new BarangModel();
-        $slug = url_title($this->request->getVar('nm_brg'), '-', true);
+        $slug_brg = url_title($this->request->getVar('nm_brg'), '-', true);
         $data = [
             'id_brg' => $this->request->getPost('id_brg'),
+            'id_spl' => $this->request->getPost('id_spl'),
             'nm_brg' => $this->request->getPost('nm_brg'),
             'hrg' => $this->request->getPost('hrg'),
             'stk' => $this->request->getPost('stk'),
             'sat' => $this->request->getPost('sat'),
-            'slug' => $slug,
+            'slug_brg' => $slug_brg,
         ];
 
         $barang->save($data);
@@ -228,13 +243,20 @@ class Pages extends BaseController
     }
 
     // UPDATE
-    public function edit($slug)
+    public function edit($slug_brg)
     {
         $data = [
             'title' => 'Form Ubah Data',
             'validation' => \Config\Services::validation(),
-            'barang' => $this->barangModel->getBarang($slug)
+            'barang' => $this->barangModel->getBarang($slug_brg),
+            'supplier' => $this->supplierModel->getSupplier()
         ];
+
+        $barang = $this->barangModel->find($slug_brg);
+        if (is_object($barang)) {
+            $data['barang'] = $barang;
+            return view('pages/barang/edit', $data);
+        }
 
         return view('pages/barang/edit', $data);
     }
@@ -264,16 +286,18 @@ class Pages extends BaseController
         ])) {
 
             $validation = \Config\Services::validation();
-            return redirect()->to('pages/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+            return redirect()->to('pages/edit/' . $this->request->getVar('slug_brg'))->withInput()->with('validation', $validation);
         }
 
-        $slug = url_title($this->request->getVar('nm_brg'), '-', true);
+        $slug_brg = url_title($this->request->getVar('nm_brg'), '-', true);
         $this->barangModel->save([
             'id_brg' => $id,
+            'id_spl' => $this->request->getVar('id_spl'),
             'nm_brg' => $this->request->getVar('nm_brg'),
             'hrg' => $this->request->getVar('hrg'),
             'stk' => $this->request->getVar('stk'),
-            'slug' => $slug,
+            'sat' => $this->request->getVar('sat'),
+            'slug_brg' => $slug_brg,
         ]);
 
         session()->setFlashdata('pesan', 'Data berhasil diubah');
@@ -285,16 +309,16 @@ class Pages extends BaseController
     // ----------------------------------------------------------------------------------------------------
 
     // VIEW
-    public function detail_pl($slug)
+    public function detail_pl($slug_plg)
     {
         $data = [
             'title' => 'Detail Pelanggan | Penjualan',
-            'pelanggan' => $this->pelangganModel->getPelanggan($slug)
+            'pelanggan' => $this->pelangganModel->getPelanggan($slug_plg)
         ];
 
         //jika tidak ada data
         if (empty($data['pelanggan'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Pelanggan ' . $slug . ' Tidak DItemukan');
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Pelanggan ' . $slug_plg . ' Tidak DItemukan');
         }
 
         return view('pages/pelanggan/detail', $data);
@@ -327,14 +351,14 @@ class Pages extends BaseController
         }
 
         $pelanggan = new PelangganModel();
-        $slug = url_title($this->request->getVar('nm_plg'), '-', true);
+        $slug_plg = url_title($this->request->getVar('nm_plg'), '-', true);
         $data = [
             'id_plg' => $this->request->getPost('id_plg'),
             'nm_plg' => $this->request->getPost('nm_plg'),
             'jn_klm' => $this->request->getPost('jn_klm'),
             'tlp' => $this->request->getPost('tlp'),
             'almt' => $this->request->getPost('almt'),
-            'slug' => $slug,
+            'slug_plg' => $slug_plg,
         ];
 
         $pelanggan->save($data);
@@ -353,12 +377,12 @@ class Pages extends BaseController
     }
 
     // UPDATE
-    public function edit_pl($slug)
+    public function edit_pl($slug_plg)
     {
         $data = [
             'title' => 'Form Ubah Data',
             'validation' => \Config\Services::validation(),
-            'pelanggan' => $this->pelangganModel->getPelanggan($slug)
+            'pelanggan' => $this->pelangganModel->getPelanggan($slug_plg)
         ];
 
         return view('pages/pelanggan/edit', $data);
@@ -366,14 +390,14 @@ class Pages extends BaseController
 
     public function update_pl($id)
     {
-        $slug = url_title($this->request->getVar('nm_plg'), '-', true);
+        $slug_plg = url_title($this->request->getVar('nm_plg'), '-', true);
         $this->pelangganModel->save([
             'id_plg' => $id,
             'nm_plg' => $this->request->getVar('nm_plg'),
             'jn_klm' => $this->request->getVar('jn_klm'),
             'tlp' => $this->request->getVar('tlp'),
             'almt' => $this->request->getVar('almt'),
-            'slug' => $slug,
+            'slug_plg' => $slug_plg,
         ]);
 
         session()->setFlashdata('pesan', 'Data berhasil diubah');
@@ -385,16 +409,16 @@ class Pages extends BaseController
     // ----------------------------------------------------------------------------------------------------
 
     // VIEW
-    public function detail_sl($slug)
+    public function detail_sl($slug_spl)
     {
         $data = [
             'title' => 'Detail Supplier | Penjualan',
-            'supplier' => $this->supplierModel->getSupplier($slug)
+            'supplier' => $this->supplierModel->getSupplier($slug_spl)
         ];
 
         //jika tidak ada data
         if (empty($data['supplier'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Supplier ' . $slug . ' Tidak DItemukan');
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Supplier ' . $slug_spl . ' Tidak DItemukan');
         }
 
         return view('pages/supplier/detail', $data);
@@ -427,13 +451,13 @@ class Pages extends BaseController
         }
 
         $supplier = new SupplierModel();
-        $slug = url_title($this->request->getVar('nm_spl'), '-', true);
+        $slug_spl = url_title($this->request->getVar('nm_spl'), '-', true);
         $data = [
             'id_spl' => $this->request->getPost('id_spl'),
             'nm_spl' => $this->request->getPost('nm_spl'),
             'tl_spl' => $this->request->getPost('tl_spl'),
             'al_spl' => $this->request->getPost('al_spl'),
-            'slug' => $slug,
+            'slug_spl' => $slug_spl,
         ];
 
         $supplier->save($data);
@@ -452,12 +476,12 @@ class Pages extends BaseController
     }
 
     // UPDATE
-    public function edit_sl($slug)
+    public function edit_sl($slug_spl)
     {
         $data = [
             'title' => 'Form Ubah Data',
             'validation' => \Config\Services::validation(),
-            'supplier' => $this->supplierModel->getSupplier($slug)
+            'supplier' => $this->supplierModel->getSupplier($slug_spl)
         ];
 
         return view('pages/supplier/edit', $data);
@@ -465,13 +489,13 @@ class Pages extends BaseController
 
     public function update_sl($id)
     {
-        $slug = url_title($this->request->getVar('nm_spl'), '-', true);
+        $slug_spl = url_title($this->request->getVar('nm_spl'), '-', true);
         $this->supplierModel->save([
             'id_spl' => $id,
             'nm_spl' => $this->request->getVar('nm_spl'),
             'tl_spl' => $this->request->getVar('tl_spl'),
             'al_spl' => $this->request->getVar('al_spl'),
-            'slug' => $slug,
+            'slug_spl' => $slug_spl,
         ]);
 
         session()->setFlashdata('pesan', 'Data berhasil diubah');
@@ -489,19 +513,33 @@ class Pages extends BaseController
         return json_encode($this->penjualanModel->getKode_Pj());
     }
 
+    public function harga_pj()
+    {
+        $barang = new BarangModel();
+        $data = $barang->find('$id_brg');
+
+        return view('penjualan/edit_pj', $data);
+    }
+
     // VIEW
-    public function detail_pj($nm_pjl)
+    public function detail_pj($slug_pjl)
     {
         $data = [
             'title' => 'Detail Penjualan | Penjualan',
-            'penjualan' => $this->penjualanModel->getPenjualan($nm_pjl),
+            'penjualan' => $this->penjualanModel->getPenjualan($slug_pjl),
             'pelanggan' => $this->pelangganModel->getPelanggan(),
             'barang' => $this->barangModel->getBarang()
         ];
 
+        $penjualan = $this->penjualanModel->find($slug_pjl);
+        if (is_object($penjualan)) {
+            $data['penjualan'] = $penjualan;
+            return view('penjualan/edit', $data);
+        }
+
         //jika tidak ada data
         if (empty($data['penjualan'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Penjualan ' . $nm_pjl . ' Tidak DItemukan');
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Penjualan ' . $slug_pjl . ' Tidak DItemukan');
         }
 
         return view('pages/penjualan/detail', $data);
@@ -537,19 +575,17 @@ class Pages extends BaseController
         }
 
         $penjualan = new PenjualanModel();
-        $slug = url_title($this->request->getVar('nm_pjl'), '-', true);
+        $slug_pjl = url_title($this->request->getVar('nm_pjl'), '-', true);
         $data = [
             'id_pjl' => $this->request->getPost('id_pjl'),
             'id_plg' => $this->request->getPost('id_plg'),
             'id_brg' => $this->request->getPost('id_brg'),
             'nm_pjl' => $this->request->getPost('nm_pjl'),
             'qty' => $this->request->getPost('qty'),
-            'hrg' => $this->request->getPost('hrg'),
-            'ttl' => $this->request->getPost('ttl'),
             'tgl' => $this->request->getPost('tgl'),
             'sts' => $this->request->getPost('sts'),
             'ktr' => $this->request->getPost('ktr'),
-            'slug' => $slug,
+            'slug_pjl' => $slug_pjl,
         ];
 
         $penjualan->save($data);
@@ -568,12 +604,14 @@ class Pages extends BaseController
     }
 
     // UPDATE
-    public function edit_pj($slug)
+    public function edit_pj($slug_pjl)
     {
         $data = [
             'title' => 'Form Ubah Data',
             'validation' => \Config\Services::validation(),
-            'penjualan' => $this->penjualanModel->getPenjualan($slug)
+            'penjualan' => $this->penjualanModel->getPenjualan($slug_pjl),
+            'pelanggan' => $this->pelangganModel->getPelanggan(),
+            'barang' => $this->barangModel->getBarang()
         ];
 
         return view('pages/penjualan/edit', $data);
@@ -581,22 +619,20 @@ class Pages extends BaseController
 
     public function update_pj($id_pjl)
     {
-        $slug = url_title($this->request->getVar('nm_spl'), '-', true);
+        $slug_pjl = url_title($this->request->getVar('nm_pjl'), '-', true);
         $this->penjualanModel->save([
-            'id_pjl' => $this->request->getPost('id_pjl'),
-            'id_plg' => $id_pjl,
+            'id_pjl' => $id_pjl,
+            'id_plg' => $this->request->getPost('id_plg'),
             'id_brg' => $this->request->getPost('id_brg'),
             'nm_pjl' => $this->request->getPost('nm_pjl'),
             'qty' => $this->request->getPost('qty'),
-            'hrg' => $this->request->getPost('hrg'),
-            'ttl' => $this->request->getPost('ttl'),
             'tgl' => $this->request->getPost('tgl'),
             'sts' => $this->request->getPost('sts'),
             'ktr' => $this->request->getPost('ktr'),
-            'slug' => $slug,
+            'slug_pjl' => $slug_pjl,
         ]);
 
         session()->setFlashdata('pesan', 'Data berhasil diubah');
-        return redirect()->to('/pages/supplier');
+        return redirect()->to('/pages/penjualan');
     }
 }

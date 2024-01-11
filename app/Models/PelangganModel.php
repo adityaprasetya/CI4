@@ -20,20 +20,26 @@ class PelangganModel extends Model
         'jn_klm',
         'tlp',
         'almt',
-        'slug',
+        'slug_plg',
     ];
 
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    public function getPelanggan($slug = false)
+    public function getJmlPelanggan()
     {
-        if ($slug == false) {
+        $builder = $this->table('pelanggan');
+        return $builder->countAll();
+    }
+
+    public function getPelanggan($slug_plg = false)
+    {
+        if ($slug_plg == false) {
             return $this->table('pelanggan')->findAll();
         }
 
-        return $this->where(['slug' => $slug])->first();
+        return $this->where(['slug_plg' => $slug_plg])->first();
     }
 
     public function search($cari)

@@ -39,20 +39,46 @@
         })
     </script>
 
-    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select2').on('change', function() {
                 $("#hrg").val($('.select2 option:selected').attr('hrg'));
-            });
+            })
         });
+
+        // });
+        // $(document).ready(function() {
+        //     $('.select3').on('change', function() {
+        //         $("#hrg").val($('.select3 option:selected').attr('hrg'));
+        //     });
+        // });
+        // var hrg = new array();
+
+        $('#id_brg').on('change', (event) => {
+            getHarga(event.target.value).then(barang => {
+                $('#hrg').val(barang.hrg);
+            })
+        })
+
+        async function getHarga(id_brg) {
+            let response = await fetch('/pages/harga_pj/' + id_brg)
+            let data = await response.json();
+        }
     </script>
 
     <script>
         function findTotal() {
             var hrg = document.getElementById('hrg').value;
             var qty = document.getElementById('qty').value;
-            var result = document.getElementById('result');
+            var myResult = hrg * qty;
+
+            document.getElementById('ttl').value = myResult;
+        }
+    </script>
+    <script>
+        function findTotal2() {
+            var hrg = document.getElementById('hrg').value;
+            var qty = document.getElementById('qty').value;
             var myResult = hrg * qty;
 
             document.getElementById('ttl').value = myResult;

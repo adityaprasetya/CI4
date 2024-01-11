@@ -16,31 +16,42 @@ class BarangModel extends Model
     protected $updatedField  = 'updated_at';
     protected $allowedFields = [
         'id_brg',
+        'id_spl',
         'nm_brg',
         'hrg',
         'stk',
         'sat',
-        'slug',
+        'slug_brg',
     ];
 
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    public function getBarang($slug = false)
+    public function getJmlBarang()
     {
-        if ($slug == false) {
-            return $this->table('barang')->findAll();
+        $builder = $this->table('barang');
+        return $builder->countAll();
+    }
+
+    public function getBarang($slug_brg = false)
+    {
+        if ($slug_brg == false) {
+            $builder = $this->table('barang');
+            $builder->join('supplier', 'supplier.id_spl = barang.id_spl');
+            $builder->orderBy("id_brg", "desc");
+            $query = $builder->get();
+            return $query->getResult();
         }
 
-        return $this->where(['slug' => $slug])->first();
+        return $this->where(['slug_brg' => $slug_brg])->first();
     }
 
     public function search($cari)
     {
         $builder = $this->table('barang');
-
         $builder->like('nm_brg', $cari);
+        $builder->orlike('nm_spl', $cari);
         $builder->orlike('hrg', $cari);
         $builder->orlike('stk', $cari);
         $builder->orlike('sat', $cari);

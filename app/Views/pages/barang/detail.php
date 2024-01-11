@@ -15,12 +15,19 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
+                                        <?= csrf_field(); ?>
                                         <h5 class="card-title"><?= $barang->nm_brg ?></h5>
                                         <br>
+                                        <p class="card-text">Supplier :</p>
+                                        <select name="id_spl" class="form-select" aria-label="Default select example" disabled>
+                                            <?php foreach ($supplier as $s) :  ?>
+                                                <option value="<?= $s->id_spl ?>" <?= $barang->id_spl == $s->id_spl ? 'selected' : null ?>><?= $s->nm_spl ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                         <p class="card-text">Harga : Rp. <?= $barang->hrg ?></p>
                                         <p class="card-text">Stok : <?= $barang->stk ?></p>
                                         <p class="card-text">Satuan : <?= $barang->sat ?></p>
-                                        <a href="/pages/edit/<?= $barang->slug ?>" class="btn btn-warning">Ubah</a>
+                                        <a href="/pages/edit/<?= $barang->slug_brg ?>" class="btn btn-warning">Ubah</a>
                                         <form action="/pages/<?= $barang->id_brg ?>" method="post" class="d-inline">
                                             <?= csrf_field(); ?>
                                             <input type="hidden" name="_method" value="DELETE">

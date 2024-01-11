@@ -29,6 +29,7 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama Barang</th>
+                                    <th scope="col">Nama Supplier</th>
                                     <th scope="col">Harga (Rp)</th>
                                     <th scope="col">Stok</th>
                                     <th scope="col">Satuan</th>
@@ -41,11 +42,12 @@
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $b->nm_brg ?></td>
-                                        <td><?= $b->hrg ?></td>
+                                        <td><?= $b->nm_spl ?></td>
+                                        <td><?= number_format(($b->hrg), 0, ',', '.') ?></td>
                                         <td><?= $b->stk ?></td>
                                         <td><?= $b->sat ?></td>
                                         <td>
-                                            <a href="/pages/detail/<?= $b->slug ?>" class="btn btn-primary">Detail</a>
+                                            <a href="/pages/detail/<?= $b->slug_brg ?>" class="btn btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

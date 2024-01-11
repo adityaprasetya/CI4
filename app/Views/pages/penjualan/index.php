@@ -33,6 +33,7 @@
                                     <th scope="col">Nama Barang</th>
                                     <th scope="col">Harga(Rp)</th>
                                     <th scope="col">QTY</th>
+                                    <th scope="col">Satuan</th>
                                     <th scope="col">Total(Rp)</th>
                                     <th scope="col">Tanggal Penjualan</th>
                                     <th scope="col">Status</th>
@@ -41,26 +42,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $total_pjl = 0; ?>
                                 <?php $i = 1 + (5 * ($currentPage - 1)); ?>
                                 <?php foreach ($penjualan as $j) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
-                                        <td><?= $j['nm_pjl'] ?></td>
-                                        <td><?= $j['nm_plg'] ?></td>
-                                        <td><?= $j['nm_brg'] ?></td>
-                                        <td><?= $j['hrg'] ?></td>
-                                        <td><?= $j['qty'] ?></td>
-                                        <td><?= $j['ttl'] ?></td>
-                                        <td><?= $j['tgl'] ?></td>
-                                        <td><?= $j['sts'] ?></td>
-                                        <td><?= $j['ktr'] ?></td>
+                                        <td><?= $j->nm_pjl ?></td>
+                                        <td><?= $j->nm_plg ?></td>
+                                        <td><?= $j->nm_brg ?></td>
+                                        <td><?= number_format($j->hrg, 0, ',', '.') ?></td>
+                                        <td><?= $j->qty ?></td>
+                                        <td><?= $j->sat ?></td>
+                                        <td><?= number_format($j->ttl = ($j->hrg * $j->qty), 0, ',', '.') ?></td>
+                                        <td><?= $j->tgl ?></td>
+                                        <td><?= $j->sts ?></td>
+                                        <td><?= $j->ktr ?></td>
                                         <td>
-                                            <!-- <a href="/pages/edit_pj/<?= $j['slug'] ?>" class="btn btn-primary">Ubah</a> -->
-                                            <form action="/pages/penjualan/<?= $j['id_pjl'] ?>" method="post" class="d-inline">
-                                                <?= csrf_field(); ?>
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Hapus Data Ini ?')">Hapus</button>
-                                            </form>
+                                            <a href="/pages/detail_pj/<?= $j->slug_pjl ?>" class="btn btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

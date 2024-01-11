@@ -40,10 +40,10 @@
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $s->nm_spl ?></td>
-                                        <td><?= $s->tl_spl ?></td>
                                         <td><?= $s->al_spl ?></td>
+                                        <td><?= $s->tl_spl ?></td>
                                         <td>
-                                            <a href="/pages/detail_sl/<?= $s->slug ?>" class="btn btn-primary">Detail</a>
+                                            <a href="/pages/detail_sl/<?= $s->slug_spl ?>" class="btn btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

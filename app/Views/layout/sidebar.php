@@ -38,19 +38,19 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/pages/pelanggan" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-user"></i>
-                        </span>
-                        <span class="hide-menu">Pelanggan</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
                     <a class="sidebar-link" href="/pages/supplier" aria-expanded="false">
                         <span>
                             <i class="ti ti-id-badge"></i>
                         </span>
                         <span class="hide-menu">Supplier</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/pages/pelanggan" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-user"></i>
+                        </span>
+                        <span class="hide-menu">Pelanggan</span>
                     </a>
                 </li>
                 <li class="nav-small-cap">

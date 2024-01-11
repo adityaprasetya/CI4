@@ -45,7 +45,7 @@
                                         <td><?= $p->tlp ?></td>
                                         <td><?= $p->almt ?></td>
                                         <td>
-                                            <a href="/pages/detail_pl/<?= $p->slug ?>" class="btn btn-primary">Detail</a>
+                                            <a href="/pages/detail_pl/<?= $p->slug_plg ?>" class="btn btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

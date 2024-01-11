@@ -25,25 +25,24 @@ class PenjualanModel extends Model
         'id_brg',
         'nm_pjl',
         'qty',
-        'hrg',
-        'ttl',
         'tgl',
         'sts',
         'ktr',
-        'slug'
+        'slug_pjl'
     ];
 
-    public function getPenjualan($slug = false)
+    public function getPenjualan($slug_pjl = false)
     {
-        if ($slug == false) {
+        if ($slug_pjl == false) {
             $builder = $this->table('penjualan');
             $builder->join('pelanggan', 'pelanggan.id_plg = penjualan.id_plg');
             $builder->join('barang', 'barang.id_brg = penjualan.id_brg');
-            $query = $builder->get()->getResultArray();
-            return $query;
+            $builder->orderBy("id_pjl", "desc");
+            $query = $builder->get();
+            return $query->getResult();
         }
 
-        return $this->where(['slug' => $slug])->first();
+        return $this->where(['slug_pjl' => $slug_pjl])->first();
     }
 
     public function search($cari)
@@ -51,8 +50,8 @@ class PenjualanModel extends Model
         $builder = $this->table('penjualan');
 
         $builder->like('nm_pjl', $cari);
-        $builder->orlike('nm_brg', $cari);
         $builder->orlike('nm_plg', $cari);
+        $builder->orlike('nm_brg', $cari);
         $builder->orlike('sts', $cari);
 
         return $builder;
@@ -77,5 +76,10 @@ class PenjualanModel extends Model
         }
 
         return 'BR-' . $key;
+    }
+
+    public function getHarga($id_brg = null)
+    {
+        return $this->table('barang')->find($id_brg);
     }
 }

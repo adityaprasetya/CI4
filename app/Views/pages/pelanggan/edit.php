@@ -14,7 +14,7 @@
                             <form action="/pages/update_pl/<?= $pelanggan->id_plg ?>" method="post">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="id" value="<?= $pelanggan->id_plg ?>">
-                                <input type="hidden" name="slug" value="<?= $pelanggan->slug ?>">
+                                <input type="hidden" name="slug_plg" value="<?= $pelanggan->slug_plg ?>">
                                 <div class="mb-3">
                                     <label for="nm_brg" class="form-label">Nama Pelanggan</label>
                                     <input type="text" class="form-control" id="nm_brg" value="<?= $pelanggan->nm_plg ?>" name="nm_plg" required>

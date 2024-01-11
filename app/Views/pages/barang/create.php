@@ -23,6 +23,15 @@
                                     <input type="text" class="form-control" id="nm_brg" name="nm_brg" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="id_spl" class="form-label">Nama Supplier</label>
+                                    <select name="id_spl" class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <?php foreach ($supplier as $s) :  ?>
+                                            <option value="<?= $s->id_spl ?>"><?= $s->nm_spl ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label for="hrg" class="form-label">Harga (Rp)</label>
                                     <input type="number" class="form-control" id="hrg" name="hrg" required>
                                 </div>

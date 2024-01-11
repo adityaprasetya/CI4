@@ -14,10 +14,18 @@
                             <?= csrf_field(); ?>
                             <form action="/pages/update/<?= $barang->id_brg ?>" method="post">
                                 <input type="hidden" name="id" value="<?= $barang->id_brg ?>">
-                                <input type="hidden" name="slug" value="<?= $barang->slug ?>">
+                                <input type="hidden" name="slug_brg" value="<?= $barang->slug_brg ?>">
                                 <div class="mb-3">
                                     <label for="nm_brg" class="form-label">Nama Barang</label>
                                     <input type="text" class="form-control" id="nm_brg" value="<?= $barang->nm_brg ?>" name="nm_brg" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_spl" class="form-label">Nama Supplier</label>
+                                    <select name="id_spl" class="form-select" aria-label="Default select example">
+                                        <?php foreach ($supplier as $s) :  ?>
+                                            <option value="<?= $s->id_spl ?>" <?= $barang->id_spl == $s->id_spl ? 'selected' : null ?>><?= $s->nm_spl ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="hrg" class="form-label">Harga (Rp)</label>
@@ -50,5 +58,7 @@
     </div>
 </div>
 </div>
+
+
 
 <?= $this->endsection(); ?>

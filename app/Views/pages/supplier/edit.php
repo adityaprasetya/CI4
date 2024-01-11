@@ -14,7 +14,7 @@
                             <form action="/pages/update_sl/<?= $supplier->id_spl ?>" method="post">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="id" value="<?= $supplier->id_spl ?>">
-                                <input type="hidden" name="slug" value="<?= $supplier->slug ?>">
+                                <input type="hidden" name="slug_spl" value="<?= $supplier->slug_spl ?>">
                                 <div class="mb-3">
                                     <label for="nm_brg" class="form-label">Nama Pelanggan</label>
                                     <input type="text" class="form-control" id="nm_spl" value="<?= $supplier->nm_spl ?>" name="nm_spl" required>

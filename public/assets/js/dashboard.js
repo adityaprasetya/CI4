@@ -12,7 +12,7 @@ $(function () {
 
     chart: {
       type: "bar",
-      height: 345,
+      height: 200,
       offsetX: -15,
       toolbar: { show: true },
       foreColor: "#adb0bb",

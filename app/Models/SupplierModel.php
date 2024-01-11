@@ -19,20 +19,26 @@ class SupplierModel extends Model
         'nm_spl',
         'tl_spl',
         'al_spl',
-        'slug',
+        'slug_spl',
     ];
 
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    public function getSupplier($slug = false)
+    public function getJmlSupplier()
     {
-        if ($slug == false) {
-            return $this->findAll();
+        $builder = $this->table('supplier');
+        return $builder->countAll();
+    }
+
+    public function getSupplier($slug_spl = false)
+    {
+        if ($slug_spl == false) {
+            return $this->table('supplier')->findAll();
         }
 
-        return $this->where(['slug' => $slug])->first();
+        return $this->where(['slug_spl' => $slug_spl])->first();
     }
 
     public function search($cari)
